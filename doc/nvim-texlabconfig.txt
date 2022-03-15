@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*       For NVIM v0.5.0       Last change: 2022 March 14
+*nvim-texlabconfig.txt*       For NVIM v0.5.0       Last change: 2022 March 15
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -54,6 +54,8 @@ a table and is optional. The default values are listed below.
 
 >
     local config = {
+        cache_activate = true,
+        cache_filetypes = { 'tex', 'bib' },
         cache_root = $XDG_CACHE_HOME or $HOME/.cache,
         reverse_search_edit_cmd = 'edit',
     }
@@ -93,7 +95,7 @@ Different values of `executable` and `args` are required for each viewer.
 <
 
 
-In the following sections, some configuration are reported.
+In the following sections, some configurations are reported.
 
 ZATHURA ~
 
@@ -113,7 +115,7 @@ COMMANDS                                          *nvim-texlabconfig-commands*
 
 TEXLABINVERSESEARCH ~
 
-**TexlabInverseSearch** is a convenient command which simplify the viewer
+**TexlabInverseSearch** is a convenient command which simplifies the viewer
 configuration. It handles multiple neovim instances and choose the correct
 server names.
 
