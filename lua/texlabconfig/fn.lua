@@ -30,12 +30,14 @@ function M:inverse_search(filename, line)
     end
 
     if i >= allow_fail then
-        error('Max Iteration')
+        return false
     end
 
     vim.api.nvim_set_current_win(win)
     vim.api.nvim_set_current_tabpage(tab)
     vim.api.nvim_win_set_cursor(win, { line, 0 })
+
+    return true
 end
 
 return M
