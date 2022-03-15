@@ -4,10 +4,13 @@ local create_augroup = vim.api.nvim_create_augroup
 local create_autocmd = vim.api.nvim_create_autocmd
 
 local config = require('texlabconfig.config').get()
+local utils = require('texlabconfig.utils')
 
 local M = {}
 
 M.fname = config.cache_root .. '/nvim-texlabconfig.json'
+M.cache_filetype = config.cache_filetype
+M.cache_activate = config.cache_activate
 
 M._servernames = {}
 
@@ -19,9 +22,21 @@ end
 function M:add_servernames()
     local avaiable_servernames = {}
     self:read()
-    for _, server in ipairs(vim.list_extend(self._servernames, { vim.v.servername })) do
+    for _, server in
+        ipairs(
+            -- unique servernames
+            utils.list_unique(
+                -- last nvim session is always first
+                vim.list_extend({ vim.v.servername }, self._servernames)
+            )
+        )
+    do
         local ok = pcall(function()
             local socket = vim.fn.sockconnect('pipe', server)
+            -- from help sockconnect()
+            if socket == 0 then
+                error('Connection Failture')
+            end
             vim.fn.chanclose(socket)
         end)
         if ok then
@@ -60,17 +75,18 @@ function M:read()
 end
 
 function M:autocmd_servernames()
-    self:add_servernames()
-    create_augroup('TeXLabCacheInit', { clear = true })
+    if not self.cache_activate then
+        return
+    end
 
-    --[[
-    create_autocmd({ 'VimEnter' }, {
+    create_augroup('TeXLabCacheInit', { clear = true })
+    create_autocmd({ 'FileType' }, {
+        pattern = M.cache_filetypes,
         callback = function()
             self:add_servernames()
         end,
         group = 'TeXLabCacheInit',
     })
-    --]]
 
     create_autocmd({ 'VimLeavePre' }, {
         callback = function()

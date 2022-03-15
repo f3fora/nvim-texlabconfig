@@ -5,6 +5,8 @@ local function cache_root()
 end
 
 local defaults = {
+    cache_activate = true,
+    cache_filetypes = { 'tex', 'bib' },
     cache_root = cache_root(),
     reverse_search_edit_cmd = 'edit',
 }

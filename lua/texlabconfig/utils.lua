@@ -53,4 +53,17 @@ function M.split(inputstr, sep)
     return t
 end
 
+function M.list_unique(list)
+    local hash = {}
+    local res = {}
+
+    for _, v in ipairs(list) do
+        if not hash[v] then
+            res[#res + 1] = v
+            hash[v] = true
+        end
+    end
+
+    return res
+end
 return M

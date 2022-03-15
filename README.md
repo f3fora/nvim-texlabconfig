@@ -31,6 +31,8 @@ use({
 
 ```lua
 local config = {
+    cache_activate = true,
+    cache_filetypes = { 'tex', 'bib' },
     cache_root = $XDG_CACHE_HOME or $HOME/.cache,
     reverse_search_edit_cmd = 'edit',
 }
@@ -63,7 +65,7 @@ lspconfig.texlab.setup({
 })
 ```
 
-In the following sections, some configuration are reported.
+In the following sections, some configurations are reported.
 
 ### Zathura
 
@@ -82,7 +84,7 @@ local args = {
 
 ### TexlabInverseSearch
 
-**TexlabInverseSearch** is a convenient command which simplify the viewer configuration. It handles multiple neovim instances and choose the correct server names.
+**TexlabInverseSearch** is a convenient command which simplifies the viewer configuration. It handles multiple neovim instances and choose the correct server names.
 
 The command takes two arguments: `%f` as absolute filename and `%l` as line number, and can be used from a remote neovim session.
 
