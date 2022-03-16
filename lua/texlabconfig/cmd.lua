@@ -9,7 +9,7 @@ function M:str_inverse_search_cmd(str)
     -- match path and line number arguments in string
     -- this allows for arguments to be enclosed in single or double quotes
     local _, path, _, line = str:match([[(["']?)(.+)%1 (["']?)(%d+)%3]])
-    if path ~= "" and line ~= "" then
+    if path ~= '' and line ~= '' then
         self:inverse_search_cmd(path, tonumber(line))
     end
 end
