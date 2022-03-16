@@ -58,7 +58,7 @@ function M:remove_servernames()
 end
 
 function M:write()
-    local encode = json.encode(self._servernames)
+    local encode = json.encode({ servernames = self._servernames })
     local file = io.open(self.fname, 'w')
     file:write(encode)
     file:close()
@@ -70,7 +70,7 @@ function M:read()
         local data = file:read()
         file:close()
         local decode = json.decode(data)
-        self._servernames = decode
+        self._servernames = decode.servernames
     end
 end
 

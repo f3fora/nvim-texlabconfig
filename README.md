@@ -33,10 +33,43 @@ use({
 local config = {
     cache_activate = true,
     cache_filetypes = { 'tex', 'bib' },
-    cache_root = $XDG_CACHE_HOME or $HOME/.cache,
+    cache_root = vim.fn.stdpath('cache'),
     reverse_search_edit_cmd = 'edit',
 }
 ```
+
+### `cache_activate`
+
+Do not change this option.
+
+Type: boolean
+Default: `true`
+
+### `cache_filetypes`
+
+Activate cache for buffers with these file types.
+
+Type: list of strings
+Default: `{ 'tex', 'bib' }`
+
+### `cache_root`
+
+Specify the cache directory. **nvim-texlabconfig** creates a `nvim-texlabconfig.json` file in this directory.
+
+Type: string
+Default: `vim.fn.stdpath('cache')`
+
+### `reverse_search_edit_cmd`
+
+When working in a multi-file project, initiating inverse search may require opening a file that is not currently open in a window. This option controls the command that is used to open files as a result of an inverse search.
+
+Type: string
+Default: `'edit'`
+Examples:
+
+- `'edit'` open buffer in current window
+- `'tabedit'` open buffer in new tab page
+- `'split'` split current window to open buffer
 
 ## Status
 
@@ -82,9 +115,9 @@ local args = {
 
 ## Commands
 
-### TexlabInverseSearch
+### `TexlabInverseSearch`
 
-**TexlabInverseSearch** is a convenient command which simplifies the viewer configuration. It handles multiple neovim instances and choose the correct server names.
+`TexlabInverseSearch` is a convenient command which simplifies the viewer configuration. It handles multiple neovim instances and choose the correct server names.
 
 The command takes two arguments: `%f` as absolute filename and `%l` as line number, and can be used from a remote neovim session.
 

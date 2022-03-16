@@ -1,13 +1,9 @@
 local vim = vim
 
-local function cache_root()
-    return (vim.env.XDG_CACHE_HOME or (vim.env.HOME .. '/.cache'))
-end
-
 local defaults = {
     cache_activate = true,
     cache_filetypes = { 'tex', 'bib' },
-    cache_root = cache_root(),
+    cache_root = vim.fn.stdpath('cache'),
     reverse_search_edit_cmd = 'edit',
 }
 
