@@ -106,7 +106,7 @@ In the following sections, some configurations are reported.
 local executable = 'zathura'
 local args = {
     '--synctex-editor-command',
-    [[nvim --headless -c 'TexlabInverseSearch %{input} %{line}']],
+    [[nvim --headless -c "TexlabInverseSearch '%{input}' %{line}"]],
     '--synctex-forward',
     '%l:1:%f',
     '%p',
@@ -122,7 +122,7 @@ local args = {
 The command takes two arguments: `%f` as absolute filename and `%l` as line number, and can be used from a remote neovim session.
 
 ```sh
-nvim --headless -c 'TexlabInverseSearch %f %l'
+nvim --headless -c "TexlabInverseSearch '%f' %l"
 ```
 
 ## Credit
