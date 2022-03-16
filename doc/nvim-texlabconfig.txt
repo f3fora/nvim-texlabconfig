@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*       For NVIM v0.5.0       Last change: 2022 March 15
+*nvim-texlabconfig.txt*       For NVIM v0.5.0       Last change: 2022 March 16
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -56,10 +56,43 @@ a table and is optional. The default values are listed below.
     local config = {
         cache_activate = true,
         cache_filetypes = { 'tex', 'bib' },
-        cache_root = $XDG_CACHE_HOME or $HOME/.cache,
+        cache_root = vim.fn.stdpath('cache'),
         reverse_search_edit_cmd = 'edit',
     }
 <
+
+
+`CACHE_ACTIVATE` ~
+
+Do not change this option.
+
+Type: boolean Default: `true`
+
+`CACHE_FILETYPES` ~
+
+Activate cache for buffers with these file types.
+
+Type: list of strings Default: `{ 'tex', 'bib' }`
+
+`CACHE_ROOT` ~
+
+Specify the cache directory. **nvim-texlabconfig** creates a
+`nvim-texlabconfig.json` file in this directory.
+
+Type: string Default: `vim.fn.stdpath('cache')`
+
+`REVERSE_SEARCH_EDIT_CMD` ~
+
+When working in a multi-file project, initiating inverse search may require
+opening a file that is not currently open in a window. This option controls the
+command that is used to open files as a result of an inverse search.
+
+Type: string Default: `'edit'` Examples:
+
+
+- `'edit'` open buffer in current window
+- `'tabedit'` open buffer in new tab page
+- `'split'` split current window to open buffer
 
 
 STATUS                                              *nvim-texlabconfig-status*
@@ -113,9 +146,9 @@ ZATHURA ~
 
 COMMANDS                                          *nvim-texlabconfig-commands*
 
-TEXLABINVERSESEARCH ~
+`TEXLABINVERSESEARCH` ~
 
-**TexlabInverseSearch** is a convenient command which simplifies the viewer
+`TexlabInverseSearch` is a convenient command which simplifies the viewer
 configuration. It handles multiple neovim instances and choose the correct
 server names.
 
