@@ -6,11 +6,11 @@ local cache = require('texlabconfig.cache')
 local M = {}
 
 function M:str_inverse_search_cmd(str)
-    -- TODO:
-    -- check what happens when /path/to/file contains spaces
-    local tbl = utils.split(str)
-    if #tbl == 2 then
-        self:inverse_search_cmd(unpack(tbl))
+    -- match path and line number arguments in string
+    -- this allows for arguments to be enclosed in single or double quotes
+    local _, path, _, line = str:match([[(["']?)(.+)%1 (["']?)(%d+)%3]])
+    if path ~= "" and line ~= "" then
+        self:inverse_search_cmd(path, tonumber(line))
     end
 end
 
