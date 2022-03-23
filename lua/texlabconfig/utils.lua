@@ -1,11 +1,12 @@
 local vim = vim
+local uv = vim.loop
 
 local M = {}
 
 function M.file_exists(name)
-    local f = io.open(name, 'r')
+    local f = uv.fs_open(name, 'r', 666)
     if f ~= nil then
-        f:close()
+        assert(uv.fs_close(f))
         return true
     end
 

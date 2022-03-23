@@ -1,5 +1,6 @@
 local vim = vim
 local json = vim.json
+local uv = vim.loop
 local create_augroup = vim.api.nvim_create_augroup
 local create_autocmd = vim.api.nvim_create_autocmd
 
@@ -59,19 +60,19 @@ end
 
 function M:write()
     local encode = json.encode({ servernames = self._servernames })
-    local file = io.open(self.fname, 'w')
-    file:write(encode)
-    file:close()
+    local fd = assert(uv.fs_open(self.fname, 'w', 666))
+    assert(uv.fs_write(fd, encode))
+    assert(uv.fs_close(fd))
 end
 
 function M:read()
-    local file = io.open(self.fname, 'r')
-    if file then
-        local data = file:read()
-        file:close()
-        local decode = json.decode(data)
-        self._servernames = decode.servernames
-    end
+    local fd = assert(uv.fs_open(self.fname, 'r', 666))
+    local stat = assert(uv.fs_fstat(fd))
+    local data = assert(uv.fs_read(fd, stat.size, 0))
+    assert(uv.fs_close(fd))
+
+    local decode = json.decode(data)
+    self._servernames = decode.servernames
 end
 
 function M:autocmd_servernames()
