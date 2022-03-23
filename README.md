@@ -42,29 +42,29 @@ local config = {
 
 Do not change this option.
 
-Type: boolean
+Type: boolean  
 Default: `true`
 
 ### `cache_filetypes`
 
 Activate cache for buffers with these file types.
 
-Type: list of strings
+Type: list of strings  
 Default: `{ 'tex', 'bib' }`
 
 ### `cache_root`
 
 Specify the cache directory. **nvim-texlabconfig** creates a `nvim-texlabconfig.json` file in this directory.
 
-Type: string
+Type: string  
 Default: `vim.fn.stdpath('cache')`
 
 ### `reverse_search_edit_cmd`
 
 When working in a multi-file project, initiating inverse search may require opening a file that is not currently open in a window. This option controls the command that is used to open files as a result of an inverse search.
 
-Type: string
-Default: `'edit'`
+Type: string  
+Default: `'edit'`  
 Examples:
 
 - `'edit'` open buffer in current window
@@ -99,6 +99,21 @@ lspconfig.texlab.setup({
 ```
 
 In the following sections, some configurations are reported.
+
+### Skim
+
+```lua
+local executable = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+local args = {"%l", "%p", "%f"}
+```
+
+In the Skim preferences (Skim -> Preferences -> Sync -> PDF-TeX Sync support)
+
+```
+Preset: Custom
+Command: nvim
+Arguments: --headless -c "TexlabInverseSearch '%file' %line"
+```
 
 ### Zathura
 
