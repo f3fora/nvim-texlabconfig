@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*       For NVIM v0.5.0       Last change: 2022 March 16
+*nvim-texlabconfig.txt*       For NVIM v0.5.0       Last change: 2022 March 23
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -129,6 +129,23 @@ Different values of `executable` and `args` are required for each viewer.
 
 
 In the following sections, some configurations are reported.
+
+SKIM ~
+
+>
+    local executable = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+    local args = {"%l", "%p", "%f"}
+<
+
+
+In the Skim preferences (Skim -> Preferences -> Sync -> PDF-TeX Sync support)
+
+>
+    Preset: Custom
+    Command: nvim
+    Arguments: --headless -c "TexlabInverseSearch '%file' %line"
+<
+
 
 ZATHURA ~
 
