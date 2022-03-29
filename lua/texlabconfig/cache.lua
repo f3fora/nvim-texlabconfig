@@ -60,13 +60,17 @@ end
 
 function M:write()
     local encode = json.encode({ servernames = self._servernames })
-    local fd = assert(uv.fs_open(self.fname, 'w', 666))
+    local fd = assert(uv.fs_open(self.fname, 'w', utils.modes))
     assert(uv.fs_write(fd, encode))
     assert(uv.fs_close(fd))
 end
 
 function M:read()
-    local fd = assert(uv.fs_open(self.fname, 'r', 666))
+    if not utils.file_exists(self.fname) then
+        self:write()
+        return
+    end
+    local fd = assert(uv.fs_open(self.fname, 'r', utils.modes))
     local stat = assert(uv.fs_fstat(fd))
     local data = assert(uv.fs_read(fd, stat.size, 0))
     assert(uv.fs_close(fd))

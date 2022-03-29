@@ -3,10 +3,12 @@ local uv = vim.loop
 
 local M = {}
 
+M.modes = 438
+
 function M.file_exists(name)
-    local f = uv.fs_open(name, 'r', 666)
-    if f ~= nil then
-        assert(uv.fs_close(f))
+    local fd = uv.fs_open(name, 'r', M.modes)
+    if fd ~= nil then
+        assert(uv.fs_close(fd))
         return true
     end
 
