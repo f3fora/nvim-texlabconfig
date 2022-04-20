@@ -12,6 +12,8 @@ jobs:
         with:
           vimdoc: nvim-texlabconfig
           pandoc: "README.md"
+          version: "Neovim 0.7.0"
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "ci(docs): auto generate docs"
@@ -22,6 +24,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: .
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "ci(format): format with stylua"
