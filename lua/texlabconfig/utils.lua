@@ -1,9 +1,11 @@
 local vim = vim
 local uv = vim.loop
 
+local config = require('texlabconfig.config').get()
+
 local M = {}
 
-M.modes = 438
+M.modes = config.file_permission_mode
 
 function M.file_exists(name)
     local fd = uv.fs_open(name, 'r', M.modes)
@@ -69,4 +71,5 @@ function M.list_unique(list)
 
     return res
 end
+
 return M

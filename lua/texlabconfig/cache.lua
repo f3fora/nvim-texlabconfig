@@ -84,20 +84,20 @@ function M:autocmd_servernames()
         return
     end
 
-    create_augroup('TeXLabCacheInit', { clear = true })
+    create_augroup('TexlabCacheInit', { clear = true })
     create_autocmd({ 'FileType' }, {
         pattern = M.cache_filetypes,
         callback = function()
             self:add_servernames()
         end,
-        group = 'TeXLabCacheInit',
+        group = 'TexlabCacheInit',
     })
 
     create_autocmd({ 'VimLeavePre' }, {
         callback = function()
             self:remove_servernames()
         end,
-        group = 'TeXLabCacheInit',
+        group = 'TexlabCacheInit',
     })
 end
 

@@ -35,6 +35,7 @@ local config = {
     cache_filetypes = { 'tex', 'bib' },
     cache_root = vim.fn.stdpath('cache'),
     reverse_search_edit_cmd = 'edit',
+    file_permission_mode = 438,
 }
 ```
 
@@ -71,9 +72,16 @@ Examples:
 - `'tabedit'` open buffer in new tab page
 - `'split'` split current window to open buffer
 
+### `file_permission_mode`
+
+See [luv-file-system-operations](https://github.com/luvit/luv/blob/master/docs.md#file-system-operations=).
+
+Type: integer  
+Default: `438`
+
 ## Status
 
-WIP. Help wanted to add and test other viewers, which are present in [Texlab Previewing Documentation](https://github.com/latex-lsp/texlab/blob/master/docs/previewing.md).
+Help wanted to add and test other viewers, which are present in [Texlab Previewing Documentation](https://github.com/latex-lsp/texlab/blob/master/docs/previewing.md).
 
 ## Previewing
 
