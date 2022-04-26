@@ -10,7 +10,7 @@ local utils = require('texlabconfig.utils')
 local M = {}
 
 M.fname = config.cache_root .. '/nvim-texlabconfig.json'
-M.cache_filetype = config.cache_filetype
+M.cache_filetypes = config.cache_filetypes
 M.cache_activate = config.cache_activate
 
 M._servernames = {}
@@ -23,15 +23,13 @@ end
 function M:add_servernames()
     local avaiable_servernames = {}
     self:read()
-    for _, server in
-        ipairs(
-            -- unique servernames
-            utils.list_unique(
-                -- last nvim session is always first
-                vim.list_extend({ vim.v.servername }, self._servernames)
-            )
+    for _, server in ipairs(
+    -- unique servernames
+        utils.list_unique(
+        -- last nvim session is always first
+            vim.list_extend({ vim.v.servername }, self._servernames)
         )
-    do
+    ) do
         local ok = pcall(function()
             local socket = vim.fn.sockconnect('pipe', server)
             -- from help sockconnect()
