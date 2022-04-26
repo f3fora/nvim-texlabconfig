@@ -23,15 +23,13 @@ end
 function M:add_servernames()
     local avaiable_servernames = {}
     self:read()
-    for _, server in
-        ipairs(
-            -- unique servernames
-            utils.list_unique(
-                -- last nvim session is always first
-                vim.list_extend({ vim.v.servername }, self._servernames)
-            )
+    for _, server in ipairs(
+    -- unique servernames
+        utils.list_unique(
+        -- last nvim session is always first
+            vim.list_extend({ vim.v.servername }, self._servernames)
         )
-    do
+    ) do
         local ok = pcall(function()
             local socket = vim.fn.sockconnect('pipe', server)
             -- from help sockconnect()
@@ -84,20 +82,22 @@ function M:autocmd_servernames()
         return
     end
 
-    create_augroup('TexlabCacheInit', { clear = true })
+    local augroup_id = create_augroup('TexlabCacheInit', { clear = true })
     create_autocmd({ 'FileType' }, {
         pattern = M.cache_filetypes,
         callback = function()
             self:add_servernames()
         end,
-        group = 'TexlabCacheInit',
+        group = augroup_id,
+        desc = 'nvim-texlabconfig: add servernames to cache',
     })
 
     create_autocmd({ 'VimLeavePre' }, {
         callback = function()
             self:remove_servernames()
         end,
-        group = 'TexlabCacheInit',
+        group = augroup_id,
+        desc = 'nvim-texlabconfig: remove servernames from cache',
     })
 end
 
