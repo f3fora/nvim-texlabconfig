@@ -1,14 +1,10 @@
 local vim = vim
 local uv = vim.loop
 
-local config = require('texlabconfig.config').get()
-
 local M = {}
 
-M.modes = config.file_permission_mode
-
-function M.file_exists(name)
-    local fd = uv.fs_open(name, 'r', M.modes)
+function M.file_exists(name, mode)
+    local fd = uv.fs_open(name, 'r', mode)
     if fd ~= nil then
         assert(uv.fs_close(fd))
         return true
@@ -47,17 +43,6 @@ function M.tabnr(win)
     error('No Win')
 end
 
-function M.split(inputstr, sep)
-    if sep == nil then
-        sep = '%s'
-    end
-    local t = {}
-    for str in string.gmatch(inputstr, '([^' .. sep .. ']+)') do
-        table.insert(t, tonumber(str) or str)
-    end
-    return t
-end
-
 function M.list_unique(list)
     local hash = {}
     local res = {}
@@ -70,6 +55,21 @@ function M.list_unique(list)
     end
 
     return res
+end
+
+function M.project_dir()
+    local paths = vim.api.nvim_list_runtime_paths()
+    local init_path = debug.getinfo(1).source
+    local dir
+    local len = 0
+    for _, path in ipairs(paths) do
+        local current_len = path:len()
+        if current_len > len and path == init_path:sub(2, 1 + current_len) then
+            dir = path
+            len = current_len
+        end
+    end
+    return dir
 end
 
 return M

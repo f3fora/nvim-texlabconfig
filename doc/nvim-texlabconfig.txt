@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*       For Neovim 0.7.0      Last change: 2022 April 26
+*nvim-texlabconfig.txt*       For Neovim 0.7.0       Last change: 2022 June 24
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -7,10 +7,9 @@ Table of Contents                        *nvim-texlabconfig-table-of-contents*
   - Requirements                              |nvim-texlabconfig-requirements|
   - Installation                              |nvim-texlabconfig-installation|
   - Configuration                            |nvim-texlabconfig-configuration|
+  - Executable: `nvim-texlabconfig`|nvim-texlabconfig-executable:-`nvim-texlabconfig`|
   - Status                                          |nvim-texlabconfig-status|
   - Previewing                                  |nvim-texlabconfig-previewing|
-  - Commands                                      |nvim-texlabconfig-commands|
-  - Credit                                          |nvim-texlabconfig-credit|
 
 ==============================================================================
 1. nvim-texlabconfig                     *nvim-texlabconfig-nvim-texlabconfig*
@@ -19,7 +18,8 @@ Table of Contents                        *nvim-texlabconfig-table-of-contents*
 Search** and **Inverse Search** between TeX and PDF files.
 
 **nvim-texlabconfig** provides some useful snippets to configure this
-capability for **neovim** and some viewers.
+capability for **neovim** and some viewers and a homonymous executable which
+allows a fast **Inverse Search**.
 
 REQUIREMENTS                                  *nvim-texlabconfig-requirements*
 
@@ -27,13 +27,16 @@ REQUIREMENTS                                  *nvim-texlabconfig-requirements*
 - nvim <https://github.com/neovim/neovim> 0.7+
 - TexLab <https://github.com/latex-lsp/texlab>
 - nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>
+- go <https://go.dev/>
 
+
+Tag `v0.1.0` does not depend on `go` for building purpose and does not require
+an additional executable.
 
 INSTALLATION                                  *nvim-texlabconfig-installation*
 
 **nvim-texlabconfig** can be installed for example with Packer
-<https://github.com/wbthomason/packer.nvim> and should be loaded only when
-required.
+<https://github.com/wbthomason/packer.nvim>.
 
 >
     use({
@@ -42,9 +45,22 @@ required.
             require('texlabconfig').setup(config)
         end,
         ft = { 'tex', 'bib' },
-        cmd = { 'TexlabInverseSearch' },
+        run = 'go build' -- Or e.g. 'go build -o ~/.bin/'
     })
 <
+
+
+The executable `nvim-texlabconfig` has to be also build, e.g., with `go build`.
+By default, it can be found in `:lua =require('texlabconfig').project_dir()`
+directory. However, the output location can be chosen with `-o` flag. From `go
+help build`:
+
+
+  The -o flag forces build to write the resulting executable or object to the
+  named output file or directory, instead of the default behavior described in
+  the last two paragraphs. If the named output is an existing directory or ends
+  with a slash or backslash, then any resulting executables will be written to
+  that directory.`
 
 
 CONFIGURATION                                *nvim-texlabconfig-configuration*
@@ -103,6 +119,31 @@ See luv-file-system-operations
 
 Type: integer Default: `438`
 
+EXECUTABLE: `NVIM-TEXLABCONFIG`*nvim-texlabconfig-executable:-`nvim-texlabconfig`*
+
+`nvim-texlabconfig` is a convenient executable which simplifies the viewer
+configuration. It handles multiple neovim instances and choose the correct one.
+
+Assuming `nvim-texlabconfig` is placed in a `$PATH` directory and `cache_root`
+is the default one, the following command can be used, where `%f` is the
+absolute filename and `%l` is the line number.
+
+>
+    nvim-texlabconfig -file '%f' -line %l
+<
+
+
+If a different `cache_root` <%60cache_root%60> is used, the directory used has
+to be specified after `-cache_root` optional flag.
+
+From `nvim-texlabconfig -help`:
+
+
+  Usage of nvim-texlabconfig: -cache_root string Path to nvim-texlabconfig.json
+  file (default "/home/user/.cache/nvim") -file string Absolute filename
+  [REQUIRED] -line int Line number [REQUIRED]
+
+
 STATUS                                              *nvim-texlabconfig-status*
 
 Help wanted to add and test other viewers, which are present in Texlab
@@ -146,12 +187,13 @@ SKIM ~
 <
 
 
-In the Skim preferences (Skim -> Preferences -> Sync -> PDF-TeX Sync support)
+In the Skim preferences (Skim → Preferences → Sync → PDF-TeX Sync
+support)
 
 >
     Preset: Custom
-    Command: nvim
-    Arguments: --headless -c "TexlabInverseSearch '%file' %line"
+    Command: nvim-texlabconfig
+    Arguments: -file '%file' -line %line
 <
 
 
@@ -161,34 +203,12 @@ ZATHURA ~
     local executable = 'zathura'
     local args = {
         '--synctex-editor-command',
-        [[nvim --headless -c "TexlabInverseSearch '%{input}' %{line}"]],
+        [[nvim-texlabconfig -file '%{input}' -line %{line}]],
         '--synctex-forward',
         '%l:1:%f',
         '%p',
     }
 <
-
-
-COMMANDS                                          *nvim-texlabconfig-commands*
-
-`TEXLABINVERSESEARCH` ~
-
-`TexlabInverseSearch` is a convenient command which simplifies the viewer
-configuration. It handles multiple neovim instances and choose the correct
-server names.
-
-The command takes two arguments: `%f` as absolute filename and `%l` as line
-number, and can be used from a remote neovim session.
-
->
-    nvim --headless -c "TexlabInverseSearch '%f' %l"
-<
-
-
-CREDIT                                              *nvim-texlabconfig-credit*
-
-
-- VimTeX <https://github.com/lervag/vimtex>
 
 
 Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>

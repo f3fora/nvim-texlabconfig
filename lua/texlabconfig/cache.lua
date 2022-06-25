@@ -9,9 +9,10 @@ local utils = require('texlabconfig.utils')
 
 local M = {}
 
-M.fname = config.cache_root .. '/nvim-texlabconfig.json'
+M.fname = uv.fs_realpath(config.cache_root .. '/nvim-texlabconfig.json')
 M.cache_filetypes = config.cache_filetypes
 M.cache_activate = config.cache_activate
+M.mode = config.file_permission_mode
 
 M._servernames = {}
 
@@ -32,14 +33,9 @@ function M:add_servernames()
             )
         )
     do
-        local ok = pcall(function()
-            local socket = vim.fn.sockconnect('pipe', server)
-            -- from help sockconnect()
-            if socket == 0 then
-                error('Connection Failture')
-            end
-            vim.fn.chanclose(socket)
-        end)
+        local socket = uv.new_pipe(false)
+        local ok, _ = pcall(uv.pipe_connect, socket, server)
+        socket:close()
         if ok then
             avaiable_servernames[#avaiable_servernames + 1] = server
         end
@@ -60,17 +56,17 @@ end
 
 function M:write()
     local encode = json.encode({ servernames = self._servernames })
-    local fd = assert(uv.fs_open(self.fname, 'w', utils.modes))
+    local fd = assert(uv.fs_open(self.fname, 'w', M.mode))
     assert(uv.fs_write(fd, encode))
     assert(uv.fs_close(fd))
 end
 
 function M:read()
-    if not utils.file_exists(self.fname) then
+    if not utils.file_exists(self.fname, M.mode) then
         self:write()
         return
     end
-    local fd = assert(uv.fs_open(self.fname, 'r', utils.modes))
+    local fd = assert(uv.fs_open(self.fname, 'r', M.mode))
     local stat = assert(uv.fs_fstat(fd))
     local data = assert(uv.fs_read(fd, stat.size, 0))
     assert(uv.fs_close(fd))

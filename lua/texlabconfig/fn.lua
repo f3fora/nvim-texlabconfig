@@ -1,4 +1,5 @@
 local vim = vim
+local uv = vim.loop
 
 local utils = require('texlabconfig.utils')
 local config = require('texlabconfig.config').get()
@@ -8,7 +9,7 @@ local M = {}
 M.reverse_search_edit_cmd = config.reverse_search_edit_cmd
 
 function M:inverse_search(filename, line)
-    local file = vim.fn.resolve(filename)
+    local file = uv.fs_realpath(filename)
     local buf, win, tab
 
     local i = 1

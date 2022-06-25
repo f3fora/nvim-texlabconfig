@@ -2,17 +2,20 @@
 
 **Texlab** is a popular Language Server for LaTeX, which supports **Forward Search** and **Inverse Search** between TeX and PDF files.
 
-**nvim-texlabconfig** provides some useful snippets to configure this capability for **neovim** and some viewers.
+**nvim-texlabconfig** provides some useful snippets to configure this capability for **neovim** and some viewers and a homonymous executable which allows a fast **Inverse Search**.
 
 ## Requirements
 
 - [nvim](https://github.com/neovim/neovim) 0.7+
 - [TexLab](https://github.com/latex-lsp/texlab)
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
+- [go](https://go.dev/)
+
+Tag `v0.1.0` does not depend on `go` for building purpose and does not require an additional executable.
 
 ## Installation
 
-**nvim-texlabconfig** can be installed for example with [Packer](https://github.com/wbthomason/packer.nvim) and should be loaded only when required.
+**nvim-texlabconfig** can be installed for example with [Packer](https://github.com/wbthomason/packer.nvim).
 
 ```lua
 use({
@@ -20,10 +23,15 @@ use({
     config = function()
         require('texlabconfig').setup(config)
     end,
-    ft = { 'tex', 'bib' },
-    cmd = { 'TexlabInverseSearch' },
+    -- ft = { 'tex', 'bib' }, -- for lazy loading
+    run = 'go build'
+    -- run = 'go build -o ~/.bin/' if e.g. ~/.bin/ is in $PATH
 })
 ```
+
+The executable `nvim-texlabconfig` has to be also build, e.g., with `go build`. By default, the result can be found in `:lua =require('texlabconfig').project_dir()` directory. However, the output location can be chosen with `-o` flag. From `go help build`:
+
+> The -o flag forces build to write the resulting executable or object to the named output file or directory, instead of the default behavior described in the last two paragraphs. If the named output is an existing directory or ends with a slash or backslash, then any resulting executables will be written to that directory.`
 
 ## Configuration
 
@@ -79,6 +87,38 @@ See [luv-file-system-operations](https://github.com/luvit/luv/blob/master/docs.m
 Type: integer  
 Default: `438`
 
+## Executable: `nvim-texlabconfig`
+
+`nvim-texlabconfig` is a convenient executable which simplifies the viewer configuration. It handles multiple neovim instances and choose the correct one.
+
+Assuming `nvim-texlabconfig` is placed in a `$PATH` directory and `cache_root` is the default one, the following command can be used, where `%f` is the absolute filename and `%l` is the line number.
+
+```sh
+nvim-texlabconfig -file '%f' -line %l
+```
+
+Otherwise, if `nvim-texlabconfig` is not in `$PATH`, e.g. it is placed in `:lua =require('texlabconfig').project_dir()`,
+
+```sh
+/path/to/nvim-texlabconfig -file '%f' -line %l
+```
+
+If a different [`cache_root`](#cache_root) is used, the directory used has to be specified after `-cache_root` optional flag.
+
+```sh
+nvim-texlabconfig -file '%f' -line %l -cache_root /path/to/cache_root/
+```
+
+From `nvim-texlabconfig -help`:
+
+> Usage of nvim-texlabconfig:  
+> -cache_root string  
+> Path to nvim-texlabconfig.json file (default "/home/user/.cache/nvim")  
+> -file string  
+> Absolute filename [REQUIRED]  
+> -line int  
+> Line number [REQUIRED]
+
 ## Status
 
 Help wanted to add and test other viewers, which are present in [Texlab Previewing Documentation](https://github.com/latex-lsp/texlab/blob/master/docs/previewing.md).
@@ -115,12 +155,12 @@ local executable = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 local args = {"%l", "%p", "%f"}
 ```
 
-In the Skim preferences (Skim -> Preferences -> Sync -> PDF-TeX Sync support)
+In the Skim preferences (Skim → Preferences → Sync → PDF-TeX Sync support)
 
 ```
 Preset: Custom
-Command: nvim
-Arguments: --headless -c "TexlabInverseSearch '%file' %line"
+Command: nvim-texlabconfig
+Arguments: -file '%file' -line %line
 ```
 
 ### Zathura
@@ -129,25 +169,9 @@ Arguments: --headless -c "TexlabInverseSearch '%file' %line"
 local executable = 'zathura'
 local args = {
     '--synctex-editor-command',
-    [[nvim --headless -c "TexlabInverseSearch '%{input}' %{line}"]],
+    [[nvim-texlabconfig -file '%{input}' -line %{line}]],
     '--synctex-forward',
     '%l:1:%f',
     '%p',
 }
 ```
-
-## Commands
-
-### `TexlabInverseSearch`
-
-`TexlabInverseSearch` is a convenient command which simplifies the viewer configuration. It handles multiple neovim instances and choose the correct server names.
-
-The command takes two arguments: `%f` as absolute filename and `%l` as line number, and can be used from a remote neovim session.
-
-```sh
-nvim --headless -c "TexlabInverseSearch '%f' %l"
-```
-
-## Credit
-
-- [VimTeX](https://github.com/lervag/vimtex)
