@@ -23,12 +23,13 @@ use({
     config = function()
         require('texlabconfig').setup(config)
     end,
-    ft = { 'tex', 'bib' },
-    run = 'go build' -- Or e.g. 'go build -o ~/.bin/'
+    -- ft = { 'tex', 'bib' }, -- for lazy loading
+    run = 'go build'
+    -- run = 'go build -o ~/.bin/' if e.g. ~/.bin/ is in $PATH
 })
 ```
 
-The executable `nvim-texlabconfig` has to be also build, e.g., with `go build`. By default, it can be found in `:lua =require('texlabconfig').project_dir()` directory. However, the output location can be chosen with `-o` flag. From `go help build`:
+The executable `nvim-texlabconfig` has to be also build, e.g., with `go build`. By default, the result can be found in `:lua =require('texlabconfig').project_dir()` directory. However, the output location can be chosen with `-o` flag. From `go help build`:
 
 > The -o flag forces build to write the resulting executable or object to the named output file or directory, instead of the default behavior described in the last two paragraphs. If the named output is an existing directory or ends with a slash or backslash, then any resulting executables will be written to that directory.`
 
@@ -96,16 +97,26 @@ Assuming `nvim-texlabconfig` is placed in a `$PATH` directory and `cache_root` i
 nvim-texlabconfig -file '%f' -line %l
 ```
 
-If a different [`cache_root`](`cache_root`) is used, the directory used has to be specified after `-cache_root` optional flag.
+Otherwise, if `nvim-texlabconfig` is not in `$PATH`, e.g. it is placed in `:lua =require('texlabconfig').project_dir()`,
+
+```sh
+/path/to/nvim-texlabconfig -file '%f' -line %l
+```
+
+If a different [`cache_root`](#cache_root) is used, the directory used has to be specified after `-cache_root` optional flag.
+
+```sh
+nvim-texlabconfig -file '%f' -line %l -cache_root /path/to/cache_root/
+```
 
 From `nvim-texlabconfig -help`:
 
-> Usage of nvim-texlabconfig:
-> -cache_root string
-> Path to nvim-texlabconfig.json file (default "/home/user/.cache/nvim")
-> -file string
-> Absolute filename [REQUIRED]
-> -line int
+> Usage of nvim-texlabconfig:  
+> -cache_root string  
+> Path to nvim-texlabconfig.json file (default "/home/user/.cache/nvim")  
+> -file string  
+> Absolute filename [REQUIRED]  
+> -line int  
 > Line number [REQUIRED]
 
 ## Status
