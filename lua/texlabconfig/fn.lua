@@ -1,5 +1,6 @@
 local vim = vim
 local uv = vim.loop
+local api = vim.api
 
 local utils = require('texlabconfig.utils')
 local config = require('texlabconfig.config').get()
@@ -31,6 +32,10 @@ function M:inverse_search(filename, line)
     end
 
     if i >= allow_fail then
+        return false
+    end
+
+    if (1 > line) or (line > vim.api.nvim_buf_line_count(buf)) then
         return false
     end
 
