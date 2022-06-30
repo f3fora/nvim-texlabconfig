@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*       For Neovim 0.7.0       Last change: 2022 June 26
+*nvim-texlabconfig.txt*       For Neovim 0.7.0       Last change: 2022 June 30
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
