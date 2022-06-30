@@ -9,7 +9,7 @@ local utils = require('texlabconfig.utils')
 
 local M = {}
 
-M.fname = uv.fs_realpath(config.cache_root .. '/nvim-texlabconfig.json')
+M.fname = config.cache_root .. '/nvim-texlabconfig.json'
 M.cache_filetypes = config.cache_filetypes
 M.cache_activate = config.cache_activate
 M.mode = config.file_permission_mode

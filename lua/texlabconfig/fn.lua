@@ -35,13 +35,13 @@ function M:inverse_search(filename, line)
         return false
     end
 
-    if (1 > line) or (line > vim.api.nvim_buf_line_count(buf)) then
+    if (1 > line) or (line > api.nvim_buf_line_count(buf)) then
         return false
     end
 
-    vim.api.nvim_set_current_win(win)
-    vim.api.nvim_set_current_tabpage(tab)
-    vim.api.nvim_win_set_cursor(win, { line, 0 })
+    api.nvim_set_current_win(win)
+    api.nvim_set_current_tabpage(tab)
+    api.nvim_win_set_cursor(win, { line, 0 })
 
     return true
 end
