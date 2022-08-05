@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*       For Neovim 0.7.0       Last change: 2022 June 30
+*nvim-texlabconfig.txt*      For Neovim 0.7.0      Last change: 2022 August 05
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -143,14 +143,15 @@ Otherwise, if `nvim-texlabconfig` is not in `$PATH`, e.g. it is placed in
 
 
 If a different |nvim-texlabconfig-`cache_root`| is used, the directory used has
-to be specified after `-cache_root` optional flag.
+to be specified after `-cache_root` optional flag. This flag is useful in
+macOS. See e.g. |nvim-texlabconfig-skim|.
 
 >
     nvim-texlabconfig -file '%f' -line %l -cache_root /path/to/cache_root/
 <
 
 
-From `nvim-texlabconfig -help`:
+From `nvim-texlabconfig -help` on Linux:
 
 
   Usage of nvim-texlabconfig: -cache_root string Path to nvim-texlabconfig.json
@@ -207,9 +208,14 @@ support)
 >
     Preset: Custom
     Command: nvim-texlabconfig
-    Arguments: -file '%file' -line %line
+    Arguments: -file '%file' -line %line -cache_root $cache_root
 <
 
+
+Replace `$cache_root` with the
+`require("texlabconfig.config").get().cache_root`, whose default value is
+`vim.fn.stdpath("cache")`, which uses XDG directory specifications on macOS
+rather than Standard Directories guidelines and returns `~/.cache/nvim/`.
 
 ZATHURA ~
 
