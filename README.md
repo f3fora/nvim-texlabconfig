@@ -103,13 +103,13 @@ Otherwise, if `nvim-texlabconfig` is not in `$PATH`, e.g. it is placed in `:lua 
 /path/to/nvim-texlabconfig -file '%f' -line %l
 ```
 
-If a different [`cache_root`](#cache_root) is used, the directory used has to be specified after `-cache_root` optional flag.
+If a different [`cache_root`](#cache_root) is used, the directory used has to be specified after `-cache_root` optional flag. This flag is useful in macOS. See e.g. [Skim](#skim).
 
 ```sh
 nvim-texlabconfig -file '%f' -line %l -cache_root /path/to/cache_root/
 ```
 
-From `nvim-texlabconfig -help`:
+From `nvim-texlabconfig -help` on Linux:
 
 > Usage of nvim-texlabconfig:  
 > -cache_root string  
@@ -160,8 +160,10 @@ In the Skim preferences (Skim → Preferences → Sync → PDF-TeX Sync support)
 ```
 Preset: Custom
 Command: nvim-texlabconfig
-Arguments: -file '%file' -line %line
+Arguments: -file '%file' -line %line -cache_root $cache_root
 ```
+
+Replace `$cache_root` with the `require("texlabconfig.config").get().cache_root`, whose default value is `vim.fn.stdpath("cache")`, which uses XDG directory specifications on macOS rather than Standard Directories guidelines and returns `~/.cache/nvim/`.
 
 ### Zathura
 
