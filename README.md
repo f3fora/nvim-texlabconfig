@@ -6,12 +6,13 @@
 
 ## Requirements
 
-- [nvim](https://github.com/neovim/neovim) 0.7+
+- [nvim](https://github.com/neovim/neovim) 0.8+
 - [TexLab](https://github.com/latex-lsp/texlab)
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - [go](https://go.dev/)
 
 Tag `v0.1.0` does not depend on `go` for building purpose and does not require an additional executable.
+Tag `v0.2.0` is compatible with nvim 0.7.
 
 ## Installation
 
@@ -42,7 +43,7 @@ local config = {
     cache_activate = true,
     cache_filetypes = { 'tex', 'bib' },
     cache_root = vim.fn.stdpath('cache'),
-    reverse_search_edit_cmd = 'edit',
+    reverse_search_edit_cmd = vim.cmd.edit,
     file_permission_mode = 438,
 }
 ```
@@ -72,13 +73,13 @@ Default: `vim.fn.stdpath('cache')`
 
 When working in a multi-file project, initiating inverse search may require opening a file that is not currently open in a window. This option controls the command that is used to open files as a result of an inverse search.
 
-Type: string  
-Default: `'edit'`  
+Type: function
+Default: `vim.cmd.edit`  
 Examples:
 
-- `'edit'` open buffer in current window
-- `'tabedit'` open buffer in new tab page
-- `'split'` split current window to open buffer
+- `vim.cmd.edit` open buffer in current window
+- `vim.cmd.tabedit` open buffer in new tab page
+- `vim.cmd.split` split current window to open buffer
 
 ### `file_permission_mode`
 

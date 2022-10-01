@@ -27,7 +27,7 @@ function M:inverse_search(filename, line)
                 end
             end
         end
-        vim.cmd(self.reverse_search_edit_cmd .. file)
+        self.reverse_search_edit_cmd(file)
         i = i + 1
     end
 
