@@ -14,7 +14,7 @@ jobs:
         with:
           vimdoc: nvim-texlabconfig
           pandoc: "README.md"
-          version: "Neovim 0.7.0"
+          version: "Neovim 0.8.0"
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
@@ -22,9 +22,10 @@ jobs:
           branch: ${{ github.head_ref }}
 
       - name: "Format with Stylua"
-        uses: JohnnyMorganz/stylua-action@1.0.0
+        uses: JohnnyMorganz/stylua-action@1.1.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          version: v0.15.1
           args: .
 
       - uses: stefanzweifel/git-auto-commit-action@v4
