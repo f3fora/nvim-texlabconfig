@@ -22,7 +22,7 @@ jobs:
           branch: ${{ github.head_ref }}
 
       - name: "Format with Stylua"
-        uses: JohnnyMorganz/stylua-action@1.1.2
+        uses: JohnnyMorganz/stylua-action@v1.1.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: v0.15.1
