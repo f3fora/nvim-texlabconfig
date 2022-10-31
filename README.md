@@ -73,7 +73,7 @@ Default: `vim.fn.stdpath('cache')`
 
 When working in a multi-file project, initiating inverse search may require opening a file that is not currently open in a window. This option controls the command that is used to open files as a result of an inverse search.
 
-Type: function
+Type: function(file_path: string)  
 Default: `vim.cmd.edit`  
 Examples:
 
@@ -122,7 +122,7 @@ From `nvim-texlabconfig -help` on Linux:
 
 ## Status
 
-Help wanted to add and test other viewers, which are present in [Texlab Previewing Documentation](https://github.com/latex-lsp/texlab/blob/master/docs/previewing.md).
+Help wanted to add and test other viewers, which are present in [Texlab Previewing Documentation](https://github.com/latex-lsp/texlab/wiki/Previewing).
 
 ## Previewing
 
