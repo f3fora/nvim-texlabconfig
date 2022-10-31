@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*      For Neovim 0.8.0     Last change: 2022 October 03
+*nvim-texlabconfig.txt*      For Neovim 0.8.0     Last change: 2022 October 31
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -105,7 +105,7 @@ When working in a multi-file project, initiating inverse search may require
 opening a file that is not currently open in a window. This option controls the
 command that is used to open files as a result of an inverse search.
 
-Type: function Default: `vim.cmd.edit` Examples:
+Type: function(file_path: string) Default: `vim.cmd.edit` Examples:
 
 
 - `vim.cmd.edit` open buffer in current window
@@ -162,8 +162,7 @@ From `nvim-texlabconfig -help` on Linux:
 STATUS                                              *nvim-texlabconfig-status*
 
 Help wanted to add and test other viewers, which are present in Texlab
-Previewing Documentation
-<https://github.com/latex-lsp/texlab/blob/master/docs/previewing.md>.
+Previewing Documentation <https://github.com/latex-lsp/texlab/wiki/Previewing>.
 
 PREVIEWING                                      *nvim-texlabconfig-previewing*
 
