@@ -21,6 +21,7 @@ Tag `v0.2.0` is compatible with nvim 0.7.
 ```lua
 use({
     'f3fora/nvim-texlabconfig',
+    -- `config = function() ... end` is always required
     config = function()
         require('texlabconfig').setup(config)
     end,
