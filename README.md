@@ -30,6 +30,8 @@ use({
 })
 ```
 
+Calling `require('texlabconfig').setup()` is required and can eventually be [configured with a table](#configuration).
+
 The executable `nvim-texlabconfig` has to be also build, e.g., with `go build`. By default, the result can be found in `:lua =require('texlabconfig').project_dir()` directory. However, the output location can be chosen with `-o` flag. From `go help build`:
 
 > The -o flag forces build to write the resulting executable or object to the named output file or directory, instead of the default behavior described in the last two paragraphs. If the named output is an existing directory or ends with a slash or backslash, then any resulting executables will be written to that directory.`
