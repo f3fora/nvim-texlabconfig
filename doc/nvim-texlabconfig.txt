@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*      For Neovim 0.8.0     Last change: 2022 October 31
+*nvim-texlabconfig.txt*     For Neovim 0.8.0     Last change: 2022 November 17
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -50,6 +50,9 @@ INSTALLATION                                  *nvim-texlabconfig-installation*
     })
 <
 
+
+Calling `require('texlabconfig').setup()` is required and can eventually be
+|nvim-texlabconfig-configured-with-a-table|.
 
 The executable `nvim-texlabconfig` has to be also build, e.g., with `go build`.
 By default, the result can be found in `:lua
