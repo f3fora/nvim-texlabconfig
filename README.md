@@ -151,11 +151,24 @@ lspconfig.texlab.setup({
 
 In the following sections, some configurations are reported.
 
-### Skim
+### [Sioyek](https://sioyek.info/)
+
+```lua
+local executable = 'sioyek'
+local args = {
+    '--reuse-instance',
+    '--inverse-search',
+    [[nvim-texlabconfig -file '%1' -line %2]],
+    '--forward-search-file', '%f',
+    '--forward-search-line', '%l', '%p'
+}
+```
+
+### [Skim](https://skim-app.sourceforge.io/)
 
 ```lua
 local executable = '/Applications/Skim.app/Contents/SharedSupport/displayline'
-local args = {"%l", "%p", "%f"}
+local args = {'%l', '%p', '%f'}
 ```
 
 In the Skim preferences (Skim → Preferences → Sync → PDF-TeX Sync support)
@@ -166,9 +179,9 @@ Command: nvim-texlabconfig
 Arguments: -file '%file' -line %line -cache_root $cache_root
 ```
 
-Replace `$cache_root` with the `require("texlabconfig.config").get().cache_root`, whose default value is `vim.fn.stdpath("cache")`, which uses XDG directory specifications on macOS rather than Standard Directories guidelines and returns `~/.cache/nvim/`.
+Replace `$cache_root` with the `require('texlabconfig.config').get().cache_root`, whose default value is `vim.fn.stdpath('cache')`, which uses XDG directory specifications on macOS rather than Standard Directories guidelines and returns `~/.cache/nvim/`.
 
-### Zathura
+### [Zathura](https://pwmt.org/projects/zathura/)
 
 ```lua
 local executable = 'zathura'
