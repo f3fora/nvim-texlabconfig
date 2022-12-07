@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*     For Neovim 0.8.0     Last change: 2022 November 17
+*nvim-texlabconfig.txt*     For Neovim 0.8.0     Last change: 2022 December 07
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -196,11 +196,25 @@ Different values of `executable` and `args` are required for each viewer.
 
 In the following sections, some configurations are reported.
 
-SKIM ~
+SIOYEK <HTTPS://SIOYEK.INFO/> ~
+
+>
+    local executable = 'sioyek'
+    local args = {
+        '--reuse-instance',
+        '--inverse-search',
+        [[nvim-texlabconfig -file '%1' -line %2]],
+        '--forward-search-file', '%f',
+        '--forward-search-line', '%l', '%p'
+    }
+<
+
+
+SKIM <HTTPS://SKIM-APP.SOURCEFORGE.IO/> ~
 
 >
     local executable = '/Applications/Skim.app/Contents/SharedSupport/displayline'
-    local args = {"%l", "%p", "%f"}
+    local args = {'%l', '%p', '%f'}
 <
 
 
@@ -215,11 +229,11 @@ support)
 
 
 Replace `$cache_root` with the
-`require("texlabconfig.config").get().cache_root`, whose default value is
-`vim.fn.stdpath("cache")`, which uses XDG directory specifications on macOS
+`require('texlabconfig.config').get().cache_root`, whose default value is
+`vim.fn.stdpath('cache')`, which uses XDG directory specifications on macOS
 rather than Standard Directories guidelines and returns `~/.cache/nvim/`.
 
-ZATHURA ~
+ZATHURA <HTTPS://PWMT.ORG/PROJECTS/ZATHURA/> ~
 
 >
     local executable = 'zathura'
