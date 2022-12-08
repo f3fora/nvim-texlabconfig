@@ -158,7 +158,7 @@ local executable = 'sioyek'
 local args = {
     '--reuse-instance',
     '--inverse-search',
-    [[nvim-texlabconfig -file '%1' -line %2]],
+    [[nvim-texlabconfig -file %1 -line %2]],
     '--forward-search-file', '%f',
     '--forward-search-line', '%l', '%p'
 }
