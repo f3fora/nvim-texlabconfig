@@ -54,29 +54,29 @@ local config = {
 
 Do not change this option.
 
-Type: boolean  
+Type: boolean
 Default: `true`
 
 ### `cache_filetypes`
 
 Activate cache for buffers with these file types.
 
-Type: list of strings  
+Type: list of strings
 Default: `{ 'tex', 'bib' }`
 
 ### `cache_root`
 
 Specify the cache directory. **nvim-texlabconfig** creates a `nvim-texlabconfig.json` file in this directory.
 
-Type: string  
+Type: string
 Default: `vim.fn.stdpath('cache')`
 
 ### `reverse_search_edit_cmd`
 
 When working in a multi-file project, initiating inverse search may require opening a file that is not currently open in a window. This option controls the command that is used to open files as a result of an inverse search.
 
-Type: function(file_path: string)  
-Default: `vim.cmd.edit`  
+Type: function(file_path: string)
+Default: `vim.cmd.edit`
 Examples:
 
 - `vim.cmd.edit` open buffer in current window
@@ -87,7 +87,7 @@ Examples:
 
 See [luv-file-system-operations](https://github.com/luvit/luv/blob/master/docs.md#file-system-operations=).
 
-Type: integer  
+Type: integer
 Default: `438`
 
 ## Executable: `nvim-texlabconfig`
@@ -114,12 +114,12 @@ nvim-texlabconfig -file '%f' -line %l -cache_root /path/to/cache_root/
 
 From `nvim-texlabconfig -help` on Linux:
 
-> Usage of nvim-texlabconfig:  
-> -cache_root string  
-> Path to nvim-texlabconfig.json file (default "/home/user/.cache/nvim")  
-> -file string  
-> Absolute filename [REQUIRED]  
-> -line int  
+> Usage of nvim-texlabconfig:
+> -cache_root string
+> Path to nvim-texlabconfig.json file (default "/home/user/.cache/nvim")
+> -file string
+> Absolute filename [REQUIRED]
+> -line int
 > Line number [REQUIRED]
 
 ## Status
@@ -156,7 +156,7 @@ In the following sections, some configurations are reported.
 ```lua
 local executable = 'sioyek'
 local args = {
-    '--reuse-instance',
+    '--reuse-window',
     '--inverse-search',
     [[nvim-texlabconfig -file %1 -line %2]],
     '--forward-search-file', '%f',
