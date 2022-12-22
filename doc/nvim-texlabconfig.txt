@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*     For Neovim 0.8.0     Last change: 2022 December 08
+*nvim-texlabconfig.txt*     For Neovim 0.8.0     Last change: 2022 December 22
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -201,7 +201,7 @@ SIOYEK <HTTPS://SIOYEK.INFO/> ~
 >
     local executable = 'sioyek'
     local args = {
-        '--reuse-instance',
+        '--reuse-window',
         '--inverse-search',
         [[nvim-texlabconfig -file %1 -line %2]],
         '--forward-search-file', '%f',
