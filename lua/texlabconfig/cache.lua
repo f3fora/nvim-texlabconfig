@@ -4,7 +4,7 @@ local uv = vim.loop
 local create_augroup = vim.api.nvim_create_augroup
 local create_autocmd = vim.api.nvim_create_autocmd
 
-local config = require('texlabconfig.config').get()
+local config = require('texlabconfig.config').options
 local utils = require('texlabconfig.utils')
 
 local M = {}

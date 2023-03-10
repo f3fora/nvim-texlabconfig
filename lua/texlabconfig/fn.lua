@@ -3,19 +3,24 @@ local uv = vim.loop
 local api = vim.api
 
 local utils = require('texlabconfig.utils')
-local config = require('texlabconfig.config').get()
 
 local M = {}
 
-M.reverse_search_edit_cmd = config.reverse_search_edit_cmd
-
 function M:inverse_search(filename, line)
+    local config = require('texlabconfig.config').options
+
+    if config.reverse_search_start_cmd() then
+    else
+        return false
+    end
+
     local file = uv.fs_realpath(filename)
     local buf, win, tab
 
     local i = 1
     local allow_fail = 4
     while i < allow_fail do
+        -- If the file is already open, move the cursor there.
         local ok
         ok, buf = pcall(utils.bufnr, file)
         if ok then
@@ -27,7 +32,8 @@ function M:inverse_search(filename, line)
                 end
             end
         end
-        self.reverse_search_edit_cmd(file)
+        -- Otherwise open it
+        config.reverse_search_edit_cmd(file)
         i = i + 1
     end
 
@@ -42,6 +48,11 @@ function M:inverse_search(filename, line)
     api.nvim_set_current_win(win)
     api.nvim_set_current_tabpage(tab)
     api.nvim_win_set_cursor(win, { line, 0 })
+
+    if config.reverse_search_end_cmd() then
+    else
+        return false
+    end
 
     return true
 end

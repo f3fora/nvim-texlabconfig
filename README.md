@@ -45,7 +45,13 @@ local config = {
     cache_activate = true,
     cache_filetypes = { 'tex', 'bib' },
     cache_root = vim.fn.stdpath('cache'),
+    reverse_search_start_cmd = function()
+        return true
+    end,
     reverse_search_edit_cmd = vim.cmd.edit,
+    reverse_search_end_cmd = function()
+        return true
+    end,
     file_permission_mode = 438,
 }
 ```
@@ -82,6 +88,14 @@ Examples:
 - `vim.cmd.edit` open buffer in current window
 - `vim.cmd.tabedit` open buffer in new tab page
 - `vim.cmd.split` split current window to open buffer
+
+### `reverse_search_{start,end}_cmd`
+
+Execute a custom function at the beginning or at end of the inverse search process.
+If the return value of this function if false or nil, the inverse search fails.
+
+Type: function()  
+Default: `function() return true end`
 
 ### `file_permission_mode`
 
