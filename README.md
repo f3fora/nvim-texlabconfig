@@ -11,8 +11,11 @@
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - [go](https://go.dev/)
 
-Tag `v0.1.0` does not depend on `go` for building purpose and does not require an additional executable.
-Tag `v0.2.0` is compatible with nvim 0.7.
+### Tags
+
+- `v0.1.0` does not depend on `go` for building purpose and does not require an additional executable
+- `v0.2.0` is compatible with nvim 0.7
+- `v0.2.1` adds the `-server` flag
 
 ## Installation
 
@@ -126,6 +129,12 @@ If a different [`cache_root`](#cache_root) is used, the directory used has to be
 nvim-texlabconfig -file '%f' -line %l -cache_root /path/to/cache_root/
 ```
 
+An optional flag `-server` is used to open the TeX file in the right neovim instance while working with multiple PDF documents. See e.g. [Zathura](#zathura).
+
+```sh
+nvim-texlabconfig -file '%f' -line %l -server `vim.v.servername`
+```
+
 From `nvim-texlabconfig -help` on Linux:
 
 > Usage of nvim-texlabconfig:
@@ -135,6 +144,8 @@ From `nvim-texlabconfig -help` on Linux:
 > Absolute filename [REQUIRED]
 > -line int
 > Line number [REQUIRED]
+> -server string
+> Server name (vim.v.servername)
 
 ## Status
 
@@ -172,7 +183,7 @@ local executable = 'sioyek'
 local args = {
     '--reuse-window',
     '--inverse-search',
-    [[nvim-texlabconfig -file %1 -line %2]],
+    [[nvim-texlabconfig -file %1 -line %2 -server ]] .. vim.v.servername,
     '--forward-search-file', '%f',
     '--forward-search-line', '%l', '%p'
 }
@@ -201,7 +212,7 @@ Replace `$cache_root` with the `require('texlabconfig.config').get().cache_root`
 local executable = 'zathura'
 local args = {
     '--synctex-editor-command',
-    [[nvim-texlabconfig -file '%{input}' -line %{line}]],
+    [[nvim-texlabconfig -file '%{input}' -line %{line} -server ]] .. vim.v.servername,
     '--synctex-forward',
     '%l:1:%f',
     '%p',
