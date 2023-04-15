@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*       For Neovim 0.8.0      Last change: 2023 March 10
+*nvim-texlabconfig.txt*       For Neovim 0.8.0      Last change: 2023 April 15
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -30,8 +30,13 @@ REQUIREMENTS                *nvim-texlabconfig-nvim-texlabconfig-requirements*
 - nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>
 - go <https://go.dev/>
 
-Tag `v0.1.0` does not depend on `go` for building purpose and does not require
-an additional executable. Tag `v0.2.0` is compatible with nvim 0.7.
+
+TAGS ~
+
+
+- `v0.1.0` does not depend on `go` for building purpose and does not require an additional executable
+- `v0.2.0` is compatible with nvim 0.7
+- `v0.2.1` adds the `-server` flag
 
 
 INSTALLATION                *nvim-texlabconfig-nvim-texlabconfig-installation*
@@ -169,12 +174,21 @@ macOS. See e.g. |nvim-texlabconfig-skim|.
     nvim-texlabconfig -file '%f' -line %l -cache_root /path/to/cache_root/
 <
 
+An optional flag `-server` is used to open the TeX file in the right neovim
+instance while working with multiple PDF documents. See
+e.g. |nvim-texlabconfig-zathura|.
+
+>sh
+    nvim-texlabconfig -file '%f' -line %l -server `vim.v.servername`
+<
+
 From `nvim-texlabconfig -help` on Linux:
 
 
   Usage of nvim-texlabconfig: -cache_root string Path to nvim-texlabconfig.json
   file (default "/home/user/.cache/nvim") -file string Absolute filename
-  [REQUIRED] -line int Line number [REQUIRED]
+  [REQUIRED] -line int Line number [REQUIRED] -server string Server name
+  (vim.v.servername)
 
 STATUS                            *nvim-texlabconfig-nvim-texlabconfig-status*
 
@@ -218,7 +232,7 @@ SIOYEK ~
     local args = {
         '--reuse-window',
         '--inverse-search',
-        [[nvim-texlabconfig -file %1 -line %2]],
+        [[nvim-texlabconfig -file %1 -line %2 -server ]] .. vim.v.servername,
         '--forward-search-file', '%f',
         '--forward-search-line', '%l', '%p'
     }
@@ -253,7 +267,7 @@ ZATHURA ~
     local executable = 'zathura'
     local args = {
         '--synctex-editor-command',
-        [[nvim-texlabconfig -file '%{input}' -line %{line}]],
+        [[nvim-texlabconfig -file '%{input}' -line %{line} -server ]] .. vim.v.servername,
         '--synctex-forward',
         '%l:1:%f',
         '%p',
