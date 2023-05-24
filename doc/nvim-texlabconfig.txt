@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*       For Neovim 0.8.0      Last change: 2023 April 15
+*nvim-texlabconfig.txt*        For Neovim 0.8.0       Last change: 2023 May 24
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -24,7 +24,6 @@ allows a fast **Inverse Search**.
 
 REQUIREMENTS                *nvim-texlabconfig-nvim-texlabconfig-requirements*
 
-
 - nvim <https://github.com/neovim/neovim> 0.8+
 - TexLab <https://github.com/latex-lsp/texlab>
 - nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>
@@ -32,7 +31,6 @@ REQUIREMENTS                *nvim-texlabconfig-nvim-texlabconfig-requirements*
 
 
 TAGS ~
-
 
 - `v0.1.0` does not depend on `go` for building purpose and does not require an additional executable
 - `v0.2.0` is compatible with nvim 0.7
@@ -122,7 +120,6 @@ opening a file that is not currently open in a window. This option controls the
 command that is used to open files as a result of an inverse search.
 
 Type: function(file_path: string) Default: `vim.cmd.edit` Examples:
-
 
 - `vim.cmd.edit` open buffer in current window
 - `vim.cmd.tabedit` open buffer in new tab page
@@ -231,6 +228,7 @@ SIOYEK ~
     local executable = 'sioyek'
     local args = {
         '--reuse-window',
+        '--execute-command', 'toggle_synctex', -- Open Sioyek in synctex mode.
         '--inverse-search',
         [[nvim-texlabconfig -file %1 -line %2 -server ]] .. vim.v.servername,
         '--forward-search-file', '%f',
@@ -238,6 +236,13 @@ SIOYEK ~
     }
 <
 
+From Sioyek documentation
+<https://sioyek-documentation.readthedocs.io/en/latest/usage.html#synctex>:
+
+
+  Press `f4` to toggle synctex mode (`toggle_synctex` command). While in this
+  mode, **right clicking** on any text opens the corresponding `tex` file in the
+  appropriate location.
 
 SKIM ~
 
