@@ -182,12 +182,17 @@ In the following sections, some configurations are reported.
 local executable = 'sioyek'
 local args = {
     '--reuse-window',
+    '--execute-command', 'toggle_synctex', -- Open Sioyek in synctex mode.
     '--inverse-search',
     [[nvim-texlabconfig -file %1 -line %2 -server ]] .. vim.v.servername,
     '--forward-search-file', '%f',
     '--forward-search-line', '%l', '%p'
 }
 ```
+
+From [Sioyek documentation](https://sioyek-documentation.readthedocs.io/en/latest/usage.html#synctex):
+
+> Press `f4` to toggle synctex mode (`toggle_synctex` command). While in this mode, **right clicking** on any text opens the corresponding `tex` file in the appropriate location.
 
 ### [Skim](https://skim-app.sourceforge.io/)
 
