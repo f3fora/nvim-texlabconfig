@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*        For Neovim 0.8.0       Last change: 2023 May 24
+*nvim-texlabconfig.txt*       For Neovim 0.8.0       Last change: 2023 June 17
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -39,19 +39,19 @@ TAGS ~
 
 INSTALLATION                *nvim-texlabconfig-nvim-texlabconfig-installation*
 
-**nvim-texlabconfig** can be installed for example with Packer
-<https://github.com/wbthomason/packer.nvim>.
+**nvim-texlabconfig** can be installed for example with lazy.nvim
+<https://github.com/folke/lazy.nvim>.
 
 >lua
-    use({
+    {
         'f3fora/nvim-texlabconfig',
         config = function()
             require('texlabconfig').setup(config)
         end,
-        -- ft = { 'tex', 'bib' }, -- for lazy loading
-        run = 'go build'
-        -- run = 'go build -o ~/.bin/' if e.g. ~/.bin/ is in $PATH
-    })
+        -- ft = { 'tex', 'bib' }, -- Lazy-load on filetype
+        build = 'go build'
+        -- build = 'go build -o ~/.bin/' if e.g. ~/.bin/ is in $PATH
+    }
 <
 
 Calling `require('texlabconfig').setup()` is required and can eventually be
@@ -202,6 +202,8 @@ has to be changed.
 
 Different values of `executable` and `args` are required for each viewer.
 
+
+  **Warning** `args` will be escaped in some strange way.
 >lua
     local lspconfig = require('lspconfig')
     local executable
@@ -230,7 +232,7 @@ SIOYEK ~
         '--reuse-window',
         '--execute-command', 'toggle_synctex', -- Open Sioyek in synctex mode.
         '--inverse-search',
-        [[nvim-texlabconfig -file %1 -line %2 -server ]] .. vim.v.servername,
+        [[nvim-texlabconfig -file %%%1 -line %%%2 -server ]] .. vim.v.servername,
         '--forward-search-file', '%f',
         '--forward-search-line', '%l', '%p'
     }
@@ -272,7 +274,7 @@ ZATHURA ~
     local executable = 'zathura'
     local args = {
         '--synctex-editor-command',
-        [[nvim-texlabconfig -file '%{input}' -line %{line} -server ]] .. vim.v.servername,
+        [[nvim-texlabconfig -file '%%%{input}' -line %%%{line} -server ]] .. vim.v.servername,
         '--synctex-forward',
         '%l:1:%f',
         '%p',
