@@ -19,18 +19,18 @@
 
 ## Installation
 
-**nvim-texlabconfig** can be installed for example with [Packer](https://github.com/wbthomason/packer.nvim).
+**nvim-texlabconfig** can be installed for example with [lazy.nvim](https://github.com/folke/lazy.nvim).
 
 ```lua
-use({
+{
     'f3fora/nvim-texlabconfig',
     config = function()
         require('texlabconfig').setup(config)
     end,
-    -- ft = { 'tex', 'bib' }, -- for lazy loading
-    run = 'go build'
-    -- run = 'go build -o ~/.bin/' if e.g. ~/.bin/ is in $PATH
-})
+    -- ft = { 'tex', 'bib' }, -- Lazy-load on filetype
+    build = 'go build'
+    -- build = 'go build -o ~/.bin/' if e.g. ~/.bin/ is in $PATH
+}
 ```
 
 Calling `require('texlabconfig').setup()` is required and can eventually be [configured with a table](#configuration).
@@ -157,6 +157,9 @@ To configure Forward and Inverse Search, the default configuration of `texlab` d
 
 Different values of `executable` and `args` are required for each viewer.
 
+> **Warning**
+> `args` will be escaped in some strange way.
+
 ```lua
 local lspconfig = require('lspconfig')
 local executable
@@ -184,7 +187,7 @@ local args = {
     '--reuse-window',
     '--execute-command', 'toggle_synctex', -- Open Sioyek in synctex mode.
     '--inverse-search',
-    [[nvim-texlabconfig -file %1 -line %2 -server ]] .. vim.v.servername,
+    [[nvim-texlabconfig -file %%%1 -line %%%2 -server ]] .. vim.v.servername,
     '--forward-search-file', '%f',
     '--forward-search-line', '%l', '%p'
 }
@@ -217,7 +220,7 @@ Replace `$cache_root` with the `require('texlabconfig.config').get().cache_root`
 local executable = 'zathura'
 local args = {
     '--synctex-editor-command',
-    [[nvim-texlabconfig -file '%{input}' -line %{line} -server ]] .. vim.v.servername,
+    [[nvim-texlabconfig -file '%%%{input}' -line %%%{line} -server ]] .. vim.v.servername,
     '--synctex-forward',
     '%l:1:%f',
     '%p',
