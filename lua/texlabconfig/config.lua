@@ -20,15 +20,13 @@ M.options = {}
 
 function M.setup(user_config)
     M.options = vim.tbl_deep_extend('force', defaults, user_config)
-    vim.validate({
-        cache_activate = { M.options.cache_activate, 'boolean' },
-        cache_filetypes = { M.options.cache_filetypes, 'table' },
-        cache_root = { M.options.cache_root, 'string' },
-        reverse_search_start_cmd = { M.options.reverse_search_start_cmd, 'function' },
-        reverse_search_edit_cmd = { M.options.reverse_search_edit_cmd, 'function' },
-        reverse_search_end_cmd = { M.options.reverse_search_end_cmd, 'function' },
-        file_permission_mode = { M.options.file_permission_mode, 'number' },
-    })
+    vim.validate(cache_activate, M.options.cache_activate, 'boolean')
+    vim.validate(cache_filetypes, M.options.cache_filetypes, 'table')
+    vim.validate(cache_root, M.options.cache_root, 'string')
+    vim.validate(reverse_search_start_cmd, M.options.reverse_search_start_cmd, 'function')
+    vim.validate(reverse_search_edit_cmd, M.options.reverse_search_edit_cmd, 'function')
+    vim.validate(reverse_search_end_cmd, M.options.reverse_search_end_cmd, 'function')
+    vim.validate(file_permission_mode, M.options.file_permission_mode, 'number')
 end
 
 return M
