@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*       For Neovim 0.8.0       Last change: 2023 June 17
+*nvim-texlabconfig.txt*      For Neovim 0.8.0     Last change: 2025 January 09
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -50,7 +50,7 @@ INSTALLATION                *nvim-texlabconfig-nvim-texlabconfig-installation*
         end,
         -- ft = { 'tex', 'bib' }, -- Lazy-load on filetype
         build = 'go build'
-        -- build = 'go build -o ~/.bin/' if e.g. ~/.bin/ is in $PATH
+        -- build = 'go build -o ~/.bin/' -- if e.g. ~/.bin/ is in $PATH
     }
 <
 
