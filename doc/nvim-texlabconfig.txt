@@ -1,4 +1,4 @@
-*nvim-texlabconfig.txt*      For Neovim 0.8.0     Last change: 2025 January 09
+*nvim-texlabconfig.txt*      For NVIM 0.10.4     Last change: 2025 February 24
 
 ==============================================================================
 Table of Contents                        *nvim-texlabconfig-table-of-contents*
@@ -227,14 +227,18 @@ In the following sections, some configurations are reported.
 SIOYEK ~
 
 >lua
-    local executable = 'sioyek'
-    local args = {
-        '--reuse-window',
-        '--execute-command', 'toggle_synctex', -- Open Sioyek in synctex mode.
-        '--inverse-search',
-        [[nvim-texlabconfig -file %%%1 -line %%%2 -server ]] .. vim.v.servername,
-        '--forward-search-file', '%f',
-        '--forward-search-line', '%l', '%p'
+    executable = "sioyek",
+    args = {
+        "--reuse-window",
+        "--execute-command",
+        "toggle_synctex", -- Open Sioyek in synctex mode.
+        "--inverse-search",
+        'nvim-texlabconfig -file "%%%1" -line "%%%2" -server ' .. vim.v.servername,
+        "--forward-search-file",
+        "%f",
+        "--forward-search-line",
+        "%l",
+        "%p",
     }
 <
 
@@ -250,7 +254,7 @@ SKIM ~
 
 >lua
     local executable = '/Applications/Skim.app/Contents/SharedSupport/displayline'
-    local args = {'%l', '%p', '%f'}
+    local args = { '%l', '%p', '%f' }
 <
 
 In the Skim preferences (Skim → Preferences → Sync → PDF-TeX Sync
