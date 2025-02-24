@@ -14,7 +14,7 @@ jobs:
         with:
           vimdoc: nvim-texlabconfig
           pandoc: "README.md"
-          version: "Neovim 0.8.0"
+          version: "NVIM 0.10.4"
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:

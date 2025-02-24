@@ -182,14 +182,18 @@ In the following sections, some configurations are reported.
 ### [Sioyek](https://sioyek.info/)
 
 ```lua
-local executable = 'sioyek'
-local args = {
-    '--reuse-window',
-    '--execute-command', 'toggle_synctex', -- Open Sioyek in synctex mode.
-    '--inverse-search',
-    [[nvim-texlabconfig -file %%%1 -line %%%2 -server ]] .. vim.v.servername,
-    '--forward-search-file', '%f',
-    '--forward-search-line', '%l', '%p'
+executable = "sioyek",
+args = {
+    "--reuse-window",
+    "--execute-command",
+    "toggle_synctex", -- Open Sioyek in synctex mode.
+    "--inverse-search",
+    'nvim-texlabconfig -file "%%%1" -line "%%%2" -server ' .. vim.v.servername,
+    "--forward-search-file",
+    "%f",
+    "--forward-search-line",
+    "%l",
+    "%p",
 }
 ```
 
@@ -201,7 +205,7 @@ From [Sioyek documentation](https://sioyek-documentation.readthedocs.io/en/lates
 
 ```lua
 local executable = '/Applications/Skim.app/Contents/SharedSupport/displayline'
-local args = {'%l', '%p', '%f'}
+local args = { '%l', '%p', '%f' }
 ```
 
 In the Skim preferences (Skim → Preferences → Sync → PDF-TeX Sync support)
